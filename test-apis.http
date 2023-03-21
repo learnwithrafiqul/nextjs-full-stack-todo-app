@@ -1,0 +1,15 @@
+
+
+GET http://localhost:3000/api/hello/
+
+###
+GET http://localhost:3000/api/get-todos/
+
+
+###
+POST http://localhost:3000/api/add-todos/
+Content-Type: application/json
+
+{
+    "title":"test title 1"
+}
