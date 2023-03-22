@@ -13,3 +13,12 @@ Content-Type: application/json
 {
     "title":"test title 1"
 }
+
+
+###
+DELETE http://localhost:3000/api/delete/1/ HTTP/1.1
+
+
+###
+
+PATCH http://localhost:3000/api/completed/641a9795e2cb0d2702ff2d7f/

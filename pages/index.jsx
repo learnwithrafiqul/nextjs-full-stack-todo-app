@@ -15,6 +15,20 @@ const index = () => {
   const [data, setData] = useState([]);
   const [reload, setReload] = useState();
 
+  const handleCheckBox = (e, id) => {
+    e.preventDefault();
+    fetch(`http://localhost:3000/api/completed/${id}`, {
+      method: "PATCH"
+    }).then(res => res.json())
+      .then(data => {
+        console.log("handleCheckBox----data---->", data);
+        setReload(data);
+      }).catch(err => {
+        console.log("handleCheckBox----err---->", err);
+        alert(err)
+      })
+  }
+
   useEffect(() => {
     let getTodos = async () => {
       const res = await fetch("http://localhost:3000/api/get-todos/");
@@ -43,6 +57,26 @@ const index = () => {
         console.log("addTodo--error----->", err);
       });
   };
+
+
+  const deleteTodo = (e, id) => {
+    e.preventDefault();
+    fetch(`http://localhost:3000/api/delete/${id}/`, {
+      method: 'DELETE',
+    }).then(res => res.json())
+      .then(data => {
+        console.log("deleteTodo--->", data)
+        setReload(data)
+      })
+      .catch(err => {
+        console.log("deleteTodo--error----->", err);
+        alert("deleteTodo--error----->", err);
+      })
+
+  }
+
+
+
   return (
     <div className="w-2/4 p-3 flex flex-col items-center m-auto my-3 rounded-xl bg-blue-200">
       <div className="p-2 bg-blue-400 flex  rounded-lg">
@@ -80,16 +114,19 @@ const index = () => {
             <p className="text-xl font-normal px-2 bg-yellow-100 rounded-lg mx-2">
               {id + 1}
             </p>
-            <p className="text-xl font-normal flex-1">{todo.title}</p>
+            <p className="text-xl font-normal flex-1">
+              {
+                todo?.completed ? <del>{todo.title}</del> : todo.title
+              }
+              {/* {todo.title} */}
+            </p>
             <input
-              onChange={(e) => console.log(e.target.value)}
               className="w-5 text-blue-600 bg-gray-100 border-gray-300 rounded "
               type="checkbox"
-              name="complite"
-              id=""
-              value="off"
+              defaultChecked={todo.completed}
+              onChange={(e) => handleCheckBox(e, todo._id)}
             />
-            <button className="bg-red-500 text-white p-2 rounded-md mx-2">
+            <button onClick={(e) => deleteTodo(e, todo._id)} className="bg-red-500 text-white p-2 rounded-md mx-2">
               Delete
             </button>
           </div>
