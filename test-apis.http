@@ -7,7 +7,7 @@ GET http://localhost:3000/api/get-todos/
 
 
 ###
-POST http://localhost:3000/api/add-todos/
+POST http://localhost:3000/api/add-todo/
 Content-Type: application/json
 
 {
